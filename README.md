@@ -14,57 +14,79 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Test Answers
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Requirements 
+• In the app the user will create a user account.
+• Once they have a user account they can see all the workstations available in a shared computer lab.
+• If a computer is not currently reserved it should appear as open and immediately available
+• If a computer is currently reserved it should appear as unavailable
+• The user should be able to see a list of Workstations and times that each are available to reserve them
+• Reservations should be in 30 minute time chunks, with a limit of 90 minutes per user per day
+• Users can reserve workstations only up to 5 days ahead of time
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+User Interface
+1. Provide a short description of what the user interface you design might look like?
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  The UI, depending on the platform layout and objectives, might be a list of available workspaces
+  found on the left side of the screen in a sub-navigation. Each WS shows the desk number and if its currently reserved or not (indicator badge).
+  Users would be able to filter through workstations by reserved/unreserved @ time.
+  On hover, a popup would display next available slot for booking as an FYI.
+  The user can click a given WS and a card on the right will pop up which would display the required information + scheduler + CTA.
+  This method would emphasise the workstation rather than availability where the default view would be of a list of Workstations
+  Alternatively, the UI could be a timetable with slots of available workstaions listed as small sqaures.
+  Each square on the timetable would display Desk # and current reserved status.
+  onClick a larger popup would appear with more information + CTA to reserve the machine.
+  This would place a larger empahis on availability of machines, rather than specific machines.
+  Stylistically, base tones would be used with subtle use of accented colours, good use of whitespace, rounded-md for border-radiuses. 
 
-### `npm run eject`
+4. What REST endpoint Method and URI would you put in place to get a Workstations schedule? Include any query params or request body.
+  Get /workstations/{:workstation_id}/bookings
+  Get /workstations/{:workstation_id}/bookings/{:bookings_id}
+  Get /workstations/{:workstation_id}/bookings?range=30
+  Get /workstations/{:workstation_id}/bookings?start_at={datetime}?ends_at={datetime}
+  Get 
+  query params {
+    booking_id?
+    bookings[]?
+    duration?
+  }
+  request body {
+    workstation_id
+  }
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  5. What REST endpoint Method and URI would you put in place to reserve a Workstation for a specific user? Include any query params or request body data you think it might need.
+  POST /workstations/{:workstation_id}/bookings
+   request body  {
+    workstation_id
+    user_id
+    booking_id
+    start_grace?
+    starts_at?
+    duration?
+    end_grace?
+    created_at?
+    updated_at?
+  }
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Data Persistence
+6. What might be the different types of data you would need to store and access for this app?
+  User data + auth
+  User current region/locale + tz
+  Workstation data
+    Device data
+    scheduling in UTC
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Other
+7. What questions would you ask the PM providing these requirements?
+  Can any/all users book workstations?
+  Can users only book a max on 90 minutes per 12:00-12:00 or a rolling 24 hour period from their last booking
+  Can users book multiple 30 minutes chunks consecutively? If not, what is the minimum time interval
+  Can users book for less than 30 minutes
+  Can users book multiple workstations at the same time?
+  Are there any other resources that booking machines are linked to?
+  Are bookings automatically approved?
+  Aside from any overlaps, are there any other reasons why a booking shouldn't be validated.
+  
