@@ -49,29 +49,29 @@ User Interface
   ```Get /workstations/{:workstation_id}/bookings?range=30```
   ```Get /workstations/{:workstation_id}/bookings?start_at={datetime}?ends_at={datetime}```
 
- query params {
-    booking_id?
-    bookings[]?
-    duration?
+-```query params {
+    booking_id?,
+    bookings[]?,
+    duration?,
   }```
- request body {
+ ``request body {
     workstation_id
-  }
+}``
 
   5. What REST endpoint Method and URI would you put in place to reserve a Workstation for a specific user? Include any query params or request body data you think it might need.
   
   ```POST /workstations/{:workstation_id}/bookings```
-   request body  {
-    workstation_id
-    user_id
-    booking_id
-    start_grace?
-    starts_at?
-    duration?
-    end_grace?
-    created_at?
+   ``request body  {
+    workstation_id,
+    user_id,
+    booking_id,
+    start_grace?,
+    starts_at?,
+    duration?,
+    end_grace?,
+    created_at?,
     updated_at?
-  }
+  }``
 
 ## Data Persistence
 6. What might be the different types of data you would need to store and access for this app?
